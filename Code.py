@@ -9,16 +9,18 @@ import re
 
 # function that returns list of credit cards founds in the input string
 def credit_card_occurrences(string):
-    CC_regex = re.compile(r"^(?:4[0-9]{12}(?:[0-9]{3})?) |" 
-                          r"( ^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$) | "
-                          r"3[47][0-9]{13} |  "
-                          r"3(?:0[0-5]|[68][0-9])[0-9]{11} |"
-                          r"6(?:011|5[0-9]{2})[0-9]{12} |"
-                          r"(?:2131|1800|35\d{3})\d{11}$") # The expression tries to find formats of Visa, Mastercard, Diners, Discover and JCB respectively
-    credit_cards = CC_regex.findall(string)
+    Visa_regex = re.compile(r"^(?:4[0-9]{12}(?:[0-9]{3})?)")
+    Master_Card_regex = re.compile(r"( ^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$)")
+    American_Express_regex = re.compile(r"3[47][0-9]{13}")
+    Diners_regex = re.compile(r"3(?:0[0-5]|[68][0-9])[0-9]{11}")
+    Discover_regex = re.compile(r"6(?:011|5[0-9]{2})[0-9]{12} ")
+    JCB_regex = re.compile(r"(?:2131|1800|35\d{3})\d{11}$")
+    regexes = [Visa_regex,Master_Card_regex, American_Express_regex, Diners_regex, Discover_regex, JCB_regex]
+    credit_cards = []
+    for r in regexes:
+        for i in r.r.findall(string):
+            credit_cards.append(i)
     return credit_cards
-
-
 
 CC_List = credit_card_occurrences(text)
 print(CC_List)
